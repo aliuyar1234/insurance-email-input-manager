@@ -133,3 +133,109 @@ Before any production rollout:
 5. Retention jobs configured and tested.
 6. Cost guardrails configured and enforced.
 7. Incident runbooks reviewed and on-call readiness confirmed.
+
+---
+
+## Enterprise productization gates (P9+)
+
+These gates extend the SSOT pack + reference implementation into an installable, operable enterprise system.
+
+Detailed plan and required decisions: `spec/13_ENTERPRISE_PHASE_PLAN_P9_PLUS.md`
+
+### G-010 (P9) — Production runtime packaging foundation
+
+Required evidence:
+- Services start in local mode (API, worker, scheduler).
+- Config validation works for `configs/dev.yaml` and `configs/prod.yaml`.
+- Store and broker contract tests pass.
+
+Minimum commands:
+- `bash scripts/verify_pack.sh`
+- `python -B -m unittest discover -s tests -p "test_*.py"`
+- `python ieimctl.py config validate --config configs/dev.yaml`
+- `python ieimctl.py config validate --config configs/prod.yaml`
+
+### G-011 (P10) — Docker Compose install and demo flow
+
+Required evidence:
+- Starter profile runs end-to-end on the sample corpus.
+- Production profile starts with secure defaults (least exposed ports, non-root containers).
+
+Minimum commands:
+- `bash scripts/verify_pack.sh`
+- `python -B -m unittest discover -s tests -p "test_*.py"`
+- `docker compose -f deploy/compose/starter/docker-compose.yml up -d --build`
+- `python ieimctl.py demo run --config configs/dev.yaml --samples data/samples`
+- `docker compose -f deploy/compose/starter/docker-compose.yml down -v`
+
+### G-012 (P11) — Helm install smoke test
+
+Required evidence:
+- Chart renders valid manifests and enforces hardening defaults (non-root, no privileged pods).
+
+Minimum commands:
+- `bash scripts/verify_pack.sh`
+- `python -B -m unittest discover -s tests -p "test_*.py"`
+- `helm template ieim deploy/helm/ieim -f deploy/helm/ieim/values.yaml`
+
+### G-013 (P12) — Auth and HITL readiness
+
+Required evidence:
+- Review API endpoints enforce RBAC fail-closed.
+- HITL actions create immutable correction records and audit events.
+
+Minimum tests:
+- Auth and RBAC tests (JWT validation and authorization matrix).
+- Review API contract tests for required endpoints.
+
+Minimum commands:
+- `bash scripts/verify_pack.sh`
+- `python -B -m unittest discover -s tests -p "test_*.py"`
+
+### G-014 (P13) — Integration readiness
+
+Required evidence:
+- At least one mail ingest adapter works end-to-end into the pipeline.
+- At least one case adapter creates a case using a mock API and attaches artifacts.
+- Failures are audited and routed to failure review queues (no silent drops).
+
+Minimum commands:
+- `bash scripts/verify_pack.sh`
+- `python -B -m unittest discover -s tests -p "test_*.py"`
+- `python ieimctl.py ingest simulate --adapter <adapter> --samples data/samples`
+- `python ieimctl.py case simulate --adapter <adapter> --samples data/samples`
+
+### G-015 (P14) — Operability gate
+
+Required evidence:
+- Metrics and dashboards are defined and render correctly.
+- Alert rules are valid.
+- Backup and restore runs successfully in a test environment.
+- Retention enforcement works without violating audit immutability.
+
+Minimum commands:
+- `bash scripts/verify_pack.sh`
+- `python -B -m unittest discover -s tests -p "test_*.py"`
+- `python ieimctl.py ops smoke --config configs/dev.yaml`
+
+### G-016 (P15) — Release readiness
+
+Required evidence:
+- Release pipeline builds versioned artifacts (images and install artifacts as applicable).
+- SBOM and provenance/signing are produced as release artifacts.
+- Upgrade checks fail closed if migrations or prerequisites are missing.
+
+Minimum commands:
+- `bash scripts/verify_pack.sh`
+- `python -B -m unittest discover -s tests -p "test_*.py"`
+- `python ieimctl.py upgrade check --config configs/prod.yaml`
+
+### G-017 (P16) — Performance gate
+
+Required evidence:
+- Meets agreed throughput/latency targets for the chosen deployment profile.
+- Mis-association and misroute risks remain fail-closed (review gates trigger instead of silent errors).
+
+Minimum commands:
+- `bash scripts/verify_pack.sh`
+- `python ieimctl.py loadtest run --profile enterprise_smoke --config configs/dev.yaml`

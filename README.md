@@ -52,6 +52,7 @@ Details: `spec/02_ARCHITECTURE.md`
 - SSOT and labels: `spec/00_CANONICAL.md`
 - Scope and requirements: `spec/01_SCOPE.md`
 - Phase plan and gates: `spec/09_PHASE_PLAN.md` and `QUALITY_GATES.md`
+- Enterprise-ready roadmap (P9+): `spec/13_ENTERPRISE_PHASE_PLAN_P9_PLUS.md`
 - Contracts (JSON Schemas): `schemas/`
 - Interfaces (adapters and HITL): `interfaces/`
 - Prompts and strict JSON contracts: `prompts/`

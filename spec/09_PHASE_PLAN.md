@@ -117,3 +117,99 @@ Tasks:
 Gate G-009 (PASSED):
 - Release checklist in `QUALITY_GATES.md` is satisfied
 - All quality gates pass in CI
+
+---
+
+## P9+ - Enterprise-ready system productization (PLANNED)
+
+The phases below extend the SSOT pack + reference implementation into an installable, operable enterprise system.
+
+Detailed plan and required decisions: `spec/13_ENTERPRISE_PHASE_PLAN_P9_PLUS.md`
+
+## P9 - Production runtime packaging foundation (services, config, and persistence)
+
+Tasks:
+- T-041 Service entrypoints and process model (OPEN)
+- T-042 Configuration layering and validation (OPEN)
+- T-043 Production persistence adapters (interfaces + one chosen implementation) (OPEN)
+- T-044 Broker interface + one chosen implementation (OPEN)
+- T-045 Deterministic job orchestration and idempotency (OPEN)
+
+Gate G-010 (NOT STARTED):
+- Deployable services start in local mode
+- Config validation passes for dev and prod configs
+- Store + broker contracts are implemented and tested
+
+## P10 - Installable Docker Compose distribution (starter and production profiles)
+
+Tasks:
+- T-046 Docker images (OPEN)
+- T-047 Compose starter profile (OPEN)
+- T-048 Compose production-hardened profile (OPEN)
+- T-049 Install and operator docs (OPEN)
+
+Gate G-011 (NOT STARTED):
+- Compose install works end-to-end on the sample corpus
+- Secure defaults (non-root, least exposure) are enforced
+
+## P11 - Kubernetes and Helm distribution (enterprise install path)
+
+Tasks:
+- T-050 Helm chart skeleton (OPEN)
+- T-051 External dependency configuration (OPEN)
+- T-052 Operational jobs (OPEN)
+- T-053 Kubernetes install docs (OPEN)
+
+Gate G-012 (NOT STARTED):
+- Helm chart renders valid manifests and passes hardening checks
+
+## P12 - Enterprise authentication, RBAC hardening, and Review UI (if required)
+
+Tasks:
+- T-054 OIDC integration in API (OPEN)
+- T-055 Review API implementation (OPEN)
+- T-056 Minimal web UI (conditional) (OPEN)
+
+Gate G-013 (NOT STARTED):
+- Auth and HITL readiness (RBAC fail-closed, audited corrections)
+
+## P13 - Production integrations (mail ingest and case adapter)
+
+Tasks:
+- T-057 Mail ingestion hardening (OPEN)
+- T-058 Case adapter first-class implementation (OPEN)
+- T-059 Generic REST identity directory adapter (conditional) (OPEN)
+
+Gate G-014 (NOT STARTED):
+- Integration readiness (at least one real ingest + one real case adapter)
+
+## P14 - Observability, backups, retention, and operator experience
+
+Tasks:
+- T-060 Metrics and dashboards (OPEN)
+- T-061 OpenTelemetry tracing (conditional) (OPEN)
+- T-062 Backup and restore procedures (OPEN)
+- T-063 Retention enforcement in production (OPEN)
+
+Gate G-015 (NOT STARTED):
+- Operability gate (monitoring + backup/restore + retention enforceable)
+
+## P15 - Release engineering, SBOM, signing, and upgrade path
+
+Tasks:
+- T-064 Versioning and release metadata (OPEN)
+- T-065 Container build and publish pipeline (OPEN)
+- T-066 SBOM generation and signing (OPEN)
+- T-067 Database migrations and upgrade checks (OPEN)
+
+Gate G-016 (NOT STARTED):
+- Release readiness (reproducible artifacts + upgrade checks)
+
+## P16 - Performance, scaling, and enterprise acceptance benchmarks
+
+Tasks:
+- T-068 Load test profiles and reports (OPEN)
+- T-069 Worker scaling guidance (OPEN)
+
+Gate G-017 (NOT STARTED):
+- Performance gate (meets agreed throughput/latency targets)

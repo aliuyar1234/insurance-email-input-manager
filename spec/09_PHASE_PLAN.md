@@ -133,7 +133,7 @@ Tasks:
 - T-042 Configuration layering and validation (DONE)
 - T-043 Production persistence adapters (interfaces + one chosen implementation) (IN PROGRESS)
 - T-044 Broker interface + one chosen implementation (IN PROGRESS)
-- T-045 Deterministic job orchestration and idempotency (OPEN)
+- T-045 Deterministic job orchestration and idempotency (IN PROGRESS)
 
 Gate G-010 (NOT STARTED):
 - Deployable services start in local mode

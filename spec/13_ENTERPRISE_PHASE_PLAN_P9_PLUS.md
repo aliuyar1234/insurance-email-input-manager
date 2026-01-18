@@ -306,17 +306,14 @@ Add production assets under dedicated folders, leaving `spec/` and `schemas/` as
     - `ieim/scheduler/main.py` (scheduler entrypoint)
     - `ieim/runtime/health.py` (health/readiness)
   - Tests:
-    - `tests/test_service_startup.py` starts each entrypoint in a dry-run mode.
+    - `tests/test_p9_service_entrypoints.py` starts each entrypoint in a dry-run mode.
 
 - **T-042: Configuration layering and validation**
   - Deliverables:
-    - `ieim/runtime/config.py` that loads:
-      - file config (`configs/prod.yaml` or `configs/dev.yaml`)
-      - environment overrides
-      - validates against an explicit config schema (YAML validated to a Python dataclass)
+    - `ieim/runtime/config.py` validates a config file via dataclass-backed loaders
     - `ieimctl.py config validate` command
   - Tests:
-    - `tests/test_config_validation.py`
+    - `tests/test_p9_config_validate_cli.py`
 
 - **T-043: Production persistence adapters (interfaces only, one implementation chosen by decision B1/B2)**
   - Deliverables:
@@ -326,7 +323,7 @@ Add production assets under dedicated folders, leaving `spec/` and `schemas/` as
       - S3-compatible object store adapter or file store remains dev-only
       - Postgres adapter with migrations
   - Tests:
-    - `tests/test_store_contracts.py` with local test containers or in-memory fakes
+    - `tests/test_p9_store_contracts.py` with local test containers or in-memory fakes
 
 - **T-044: Broker interface and one concrete broker implementation (chosen by decision B3)**
   - Deliverables:
@@ -334,7 +331,7 @@ Add production assets under dedicated folders, leaving `spec/` and `schemas/` as
     - one implementation: RabbitMQ
     - dead-letter semantics and retry limits (fail-closed)
   - Tests:
-    - `tests/test_broker_contracts.py`
+    - `tests/test_p9_broker_contracts.py`
 
 - **T-045: Deterministic job orchestration and idempotency**
   - Deliverables:

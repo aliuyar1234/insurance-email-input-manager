@@ -130,9 +130,9 @@ Detailed plan and required decisions: `spec/13_ENTERPRISE_PHASE_PLAN_P9_PLUS.md`
 
 Tasks:
 - T-041 Service entrypoints and process model (DONE)
-- T-042 Configuration layering and validation (IN PROGRESS)
-- T-043 Production persistence adapters (interfaces + one chosen implementation) (OPEN)
-- T-044 Broker interface + one chosen implementation (OPEN)
+- T-042 Configuration layering and validation (DONE)
+- T-043 Production persistence adapters (interfaces + one chosen implementation) (IN PROGRESS)
+- T-044 Broker interface + one chosen implementation (IN PROGRESS)
 - T-045 Deterministic job orchestration and idempotency (OPEN)
 
 Gate G-010 (NOT STARTED):

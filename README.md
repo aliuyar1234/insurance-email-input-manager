@@ -1,14 +1,15 @@
-# Insurance Email Input Manager (IEIM) — SSOT Pack v1.0.1
+# Insurance Email Input Manager (IEIM) - SSOT Pack v1.0.1
 
-This repository is a **Single Source of Truth (SSOT) pack** for implementing the Insurance Email Input Manager (IEIM) as a production system. It combines specifications, schemas, configs, tests, and runbooks into a phase-by-phase delivery plan with binding quality gates.
+This repository is a **Single Source of Truth (SSOT) pack** for building an Insurance Email Input Manager (IEIM) as a production system. It combines specifications, schemas, configs, tests, and runbooks into a phase-by-phase delivery plan with binding quality gates.
 
-IEIM’s objective is to turn inbound insurance emails (including attachments) into **auditable, deterministic operational outcomes**:
-ingest → normalize → attachment processing → identity resolution → classify/extract → deterministic routing → case/ticket actions → HITL review (when needed) → immutable audit log.
+IEIM's objective is to turn inbound insurance emails (including attachments) into **auditable, deterministic operational outcomes**:
+ingest -> normalize -> attachment processing -> identity resolution -> classify/extract -> deterministic routing -> case/ticket actions -> HITL review (when needed) -> immutable audit log.
 
 ## What this pack is (and is not)
 
-- This is an **implementation handoff pack**: stable contracts, rules, and verification to build against.
-- This is not a hosted service by itself. The included Python code is a **reference implementation** for local execution and verification of the contracts and gates.
+- This is an **implementation handoff pack**: stable contracts, canonical labels/IDs, rulesets, and verification to build against.
+- This repository includes a **reference implementation** (Python) to execute the phases and validate the contracts and gates.
+- This is not a hosted SaaS. You deploy it in your own environment (Compose or Kubernetes/Helm).
 
 ## Architecture
 
@@ -77,31 +78,35 @@ The CLI also exposes:
 python ieimctl.py pack verify
 ```
 
-## Configuration and operations
+## Install
 
-- **Incident toggles** (force review, disable LLM, block case creation for selected risk flags): `configs/prod.yaml` and `runbooks/incident_response.md`
-- **Retention job** (file-backed reference): `python ieimctl.py retention run --help` and `runbooks/retention_jobs.md`
-- **Operability smoke** (metrics + dashboards/rules validation + backup/restore + retention safety): `python ieimctl.py ops smoke --config configs/dev.yaml`
-  - Use `--keep-artifacts` to keep the generated runtime artifacts on disk (default is cleanup on success).
-- **Metrics** (Prometheus):
-  - API: `GET /metrics`
-  - Worker: `IEIM_WORKER_METRICS_PORT` (default `9100`)
-  - Scheduler: `IEIM_SCHEDULER_METRICS_PORT` (default `9101`)
-  - Dashboards: `deploy/observability/grafana/`
-  - Alert rules: `deploy/observability/prometheus/`
-- **Backup/restore** (file-backed + optional Postgres/S3): `infra/backup/backup.sh`, `infra/backup/restore.sh`, and `docs/BACKUP_RESTORE.md`
-- **Load test harness** (file-backed sample corpus): `python ieimctl.py loadtest run --help`
-  - Example report: `reports/load_test_report.json`
+- Docker Compose: `docs/INSTALL_COMPOSE.md`
+- Kubernetes/Helm: `docs/INSTALL_HELM.md`
+- Upgrade guidance: `docs/UPGRADE.md`
+
+## Releases (installable artifacts)
+
+Each GitHub Release publishes:
+
+- Helm chart package (`ieim-<version>.tgz`)
+- SBOMs (SPDX JSON) for the published container images
+- Signed provenance (`provenance.json` + `provenance.sig` + `provenance.crt`)
+
+Release container images are published to GHCR:
+
+- `ghcr.io/<owner>/ieim-api:<version>`
+- `ghcr.io/<owner>/ieim-worker:<version>`
+- `ghcr.io/<owner>/ieim-scheduler:<version>`
+
+Details and verification: `docs/RELEASES.md`
 
 ## LLM usage (policy-gated)
 
-LLM calls are optional, are gated to preserve safety and reproducibility, and are disabled by default. The reference implementation supports:
-
-- External provider (OpenAI) when enabled
-- Local provider via Ollama for on-prem deployments
+LLM calls are optional, are gated to preserve safety and reproducibility, and are disabled by default.
 
 Details: `spec/05_CLASSIFICATION_AND_LLM.md`
 
 ## License
 
 Apache-2.0 (see `LICENSE`).
+

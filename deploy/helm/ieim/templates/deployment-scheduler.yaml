@@ -22,7 +22,7 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: scheduler
-          image: "{{ .Values.image.scheduler.repository }}:{{ .Values.image.scheduler.tag }}"
+          image: "{{ .Values.image.scheduler.repository }}:{{ default .Chart.AppVersion .Values.image.scheduler.tag }}"
           imagePullPolicy: {{ .Values.image.scheduler.pullPolicy }}
           args:
             - "--config"

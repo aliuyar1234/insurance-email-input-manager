@@ -1,15 +1,15 @@
 image:
   api:
     repository: ieim-api
-    tag: "production"
+    tag: ""
     pullPolicy: IfNotPresent
   worker:
     repository: ieim-worker
-    tag: "production"
+    tag: ""
     pullPolicy: IfNotPresent
   scheduler:
     repository: ieim-scheduler
-    tag: "production"
+    tag: ""
     pullPolicy: IfNotPresent
 
 serviceAccount:

@@ -36,6 +36,28 @@ Production values:
 helm install ieim deploy/helm/ieim -f deploy/helm/ieim/production-values.yaml
 ```
 
+## Install from a GitHub Release (recommended)
+
+Download the packaged chart:
+
+```bash
+gh release download v1.0.1 -p "ieim-*.tgz"
+```
+
+Install the chart and point image repositories to GHCR:
+
+```bash
+VERSION="1.0.1"
+OWNER="<github_owner>"
+
+helm install ieim "ieim-${VERSION}.tgz" \
+  --set image.api.repository="ghcr.io/${OWNER}/ieim-api" \
+  --set image.worker.repository="ghcr.io/${OWNER}/ieim-worker" \
+  --set image.scheduler.repository="ghcr.io/${OWNER}/ieim-scheduler"
+```
+
+The chart defaults the image tag to the chart `appVersion` when `image.*.tag` is empty.
+
 ## Security defaults
 
 The chart enforces non-root execution, drops Linux capabilities, and uses a read-only root filesystem with an explicit writable `/tmp` volume.

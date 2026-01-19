@@ -1,15 +1,15 @@
 image:
   api:
     repository: ieim-api
-    tag: "starter"
+    tag: ""
     pullPolicy: IfNotPresent
   worker:
     repository: ieim-worker
-    tag: "starter"
+    tag: ""
     pullPolicy: IfNotPresent
   scheduler:
     repository: ieim-scheduler
-    tag: "starter"
+    tag: ""
     pullPolicy: IfNotPresent
 
 config:

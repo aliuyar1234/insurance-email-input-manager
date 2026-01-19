@@ -1,10 +1,10 @@
-# IEIM Pack — SPEC (high level)
+# IEIM — SPEC (high level)
 
 This file is a short map to the authoritative specifications in `spec/`.
 
 ## Start here
 
-1. **SSOT**: `spec/00_CANONICAL.md`
+1. Canonical contracts: `spec/00_CANONICAL.md`
 2. Scope: `spec/01_SCOPE.md`
 3. Architecture: `spec/02_ARCHITECTURE.md`
 4. Data model and schemas: `spec/03_DATA_MODEL.md` and `schemas/`
@@ -31,4 +31,4 @@ Run:
 bash scripts/verify_pack.sh
 ```
 
-This pack is designed for deterministic, fail-closed enterprise implementation.
+IEIM is designed for deterministic, fail-closed enterprise implementation.

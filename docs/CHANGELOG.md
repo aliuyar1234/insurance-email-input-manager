@@ -4,6 +4,11 @@ All notable changes to the Insurance Email Input Manager (IEIM) SSOT pack and re
 
 This project follows Semantic Versioning.
 
+## 1.0.3
+
+- Renamed the GitHub repository to `insurance-email-input-manager` and updated internal identifiers and docs.
+- Fixed Mermaid rendering in `spec/02_ARCHITECTURE.md`.
+
 ## 1.0.2
 
 - Manifest hashing is stable across platforms (LF normalization) and ignores runtime output directories.

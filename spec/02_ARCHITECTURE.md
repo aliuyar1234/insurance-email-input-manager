@@ -1,23 +1,23 @@
 # Architecture
 
-This section describes IEIM’s logical and physical architecture, including data stores and integration points. Canonical IDs, labels, and paths are defined in `spec/00_CANONICAL.md`.
+This section describes IEIM's logical and physical architecture, including data stores and integration points. Canonical IDs, labels, and paths are defined in `spec/00_CANONICAL.md`.
 
 ## End-to-end flow
 
 ```mermaid
 flowchart LR
-  A[Mail Ingestion] --> B[Raw Store (immutable)]
-  B --> C[Normalize]
-  C --> D[Attachment Processing]
-  D --> E[Identity Resolution]
-  E --> F[Classification (gated)]
-  F --> G[Extraction]
-  G --> H[Routing Engine (deterministic)]
-  H --> I[Case/Ticket Adapter]
-  H --> J[HITL Gate]
-  J -->|review| K[Review UI]
+  A["Mail Ingestion"] --> B["Raw Store (immutable)"]
+  B --> C["Normalize"]
+  C --> D["Attachment Processing"]
+  D --> E["Identity Resolution"]
+  E --> F["Classification (gated)"]
+  F --> G["Extraction"]
+  G --> H["Routing Engine (deterministic)"]
+  H --> I["Case/Ticket Adapter"]
+  H --> J["HITL Gate"]
+  J -->|review| K["Review UI/API"]
   K --> H
-  C --> L[Audit Store]
+  C --> L["Audit Store (hash chain)"]
   D --> L
   E --> L
   F --> L
@@ -40,7 +40,7 @@ The system is decomposed into services and adapters. The module identifiers used
 | Normalization service | MIME parsing, canonicalization, language detection, thread metadata | Produces NormalizedMessage |
 | Attachment service | AV scan, file type detect, text extract, OCR | Produces AttachmentArtifact |
 | Identity service | Candidate retrieval + deterministic scoring + Top-K + evidence | Fail-closed |
-| Classification service | Rules → lightweight model → LLM (gated) | Strict JSON outputs |
+| Classification service | Rules -> lightweight model -> LLM (gated) | Strict JSON outputs |
 | Extraction service | Entities + provenance + validation | High-impact entities gate |
 | Routing service | Deterministic decision tables + hard overrides | Versioned rulesets |
 | Case adapter service | Create/update cases, attach original email/files, add drafts | Idempotent keys |

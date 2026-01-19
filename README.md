@@ -1,4 +1,4 @@
-# Insurance Email Input Manager (IEIM) v1.0.2
+# Insurance Email Input Manager (IEIM) v1.0.3
 
 IEIM is an **open-source, self-hosted email intake system for insurers**. It ingests inbound emails (with attachments), extracts structured facts, applies deterministic routing, and creates auditable downstream actions (case/ticket, drafts, or human review) with an immutable audit trail.
 

@@ -1,11 +1,11 @@
-# AGENTS - Codex Handoff Rules (IEIM Pack v1)
+# AGENTS - Contributor Rules (IEIM)
 
-You are implementing IEIM from this pack.
+You are implementing IEIM in this repository.
 
 ## Non-negotiable rules
 
 1. **No guessing**: if something needed for implementation is missing, record it in `BLOCKERS.md` and stop the affected task. Do not invent APIs, labels, or schema fields.
-2. **Single Source of Truth (SSOT)**: canonical constants and label-sets are defined **only** in `spec/00_CANONICAL.md`. Use them; do not redefine them elsewhere.
+2. **Canonical contracts**: canonical constants and label-sets are defined **only** in `spec/00_CANONICAL.md`. Use them; do not redefine them elsewhere.
 3. **Fail-closed by default**: uncertainty -> review or request-info. Never silently mis-associate or misroute.
 4. **Immutability**: raw emails/attachments are append-only; audit events are append-only with a hash chain.
 5. **Determinism mode**: must be reproducible; decision hashes must be timestamp-free.
